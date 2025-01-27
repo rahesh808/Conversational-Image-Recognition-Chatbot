@@ -1,0 +1,22 @@
+from Obect_detection_audio import detect_object
+with gr.Tab("Object Detection with Audio"):
+        with gr.Row():
+            with gr.Column(scale=4):
+                # Image input
+                image_input = gr.Image(label="Select Image", type="pil")
+            with gr.Column(scale=1):
+                # Button to trigger the object detection and audio generation
+                detect_button = gr.Button("Detect Objects & Generate Audio", variant="primary")
+        
+        # Output area: processed image and audio
+        processed_image_output = gr.Image(label="Processed Image", type="pil")
+        audio_output = gr.Audio(label="Generated Audio")
+        
+        # Function to handle the button click
+        def detect_objects_and_generate_audio(image):
+            processed_image, generated_audio = detect_object(image)  # Call detect_object function
+            return processed_image, generated_audio
+        
+        # Link the button to the function
+        detect_button.click(detect_objects_and_generate_audio, inputs=[image_input], outputs=[processed_image_output, audio_output])
+    
